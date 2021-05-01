@@ -151,35 +151,24 @@ def predict():
     else:
         res = res[0]
 
+    # init values
     max = 2147483647
     min = 0
 
-    if res == 0:
-        max = 50000
-    elif res == 1:
-        min = 50000
-        max = 100000
-    elif res == 2:
-        min = 100000
-        max = 150000
-    elif res == 3:
-        min = 150000
-        max = 200000
-    elif res == 4:
-        min = 200000
-        max = 250000
-    elif res == 5:
-        min = 250000
-        max = 300000
-    elif res == 6:
-        min = 300000
-        max = 350000
-    elif res == 7:
-        min = 350000
-        max = 400000
-    elif res == 8:
-        min = 400000
-        max = 450000
+    res_map = {
+        0: (0, 50000),
+        1: (50000, 100000),
+        2: (100000, 150000),
+        3: (150000, 200000),
+        4: (200000, 250000),
+        5: (250000, 300000),
+        6: (300000, 350000),
+        7: (350000, 400000),
+        8: (400000, 450000),
+    }
+
+    if res in res_map.keys():
+        min, max = res_map[res]
     else:
         min = 450000
 
