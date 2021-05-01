@@ -116,6 +116,7 @@ def init():
 
 @application.route('/predict', methods=['GET', 'POST'])
 def predict():
+    # test data (used in GET only)
     year = 2021
     month = 1
     county = 0
@@ -123,6 +124,8 @@ def predict():
     pro = 0
     vat = 0
     size = 1
+
+    # user input
     if request.method == "POST":
         year = request.form.get('year')
         month = request.form.get('month')
@@ -131,21 +134,26 @@ def predict():
         pro = request.form.get('property')
         vat = request.form.get('vat')
         size = int(request.form.get('size'))
+
     if size < 35:
         size = 0
     elif size < 125:
         size = 1
     else:
         size = 2
+
     df_empty = pd.DataFrame([[year, month, county, full, vat, size]], columns=describe)
     res = knn.predict(df_empty)
+
     if pro == 1:
         if res[0] > 0:
             res = res[0] - 1
     else:
         res = res[0]
+
     max = 2147483647
     min = 0
+
     if res == 0:
         max = 50000
     elif res == 1:
@@ -174,6 +182,7 @@ def predict():
         max = 450000
     else:
         min = 450000
+
     result = {
         "code": 200,
         "msg": "OK",
