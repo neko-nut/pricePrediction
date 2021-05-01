@@ -7,8 +7,6 @@ from appdir.config import Config
 from sklearn.neighbors import KNeighborsClassifier
 
 
-@application.route('/')
-@application.route('/init')
 def init():
     attributes = [
         "Date of Sale (dd/mm/yyyy)",
@@ -186,3 +184,6 @@ def predict():
     }
     return jsonify(result)
 
+
+# auto init
+init()
