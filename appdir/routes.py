@@ -151,9 +151,9 @@ def predict():
     else:
         res = res[0]
 
-    # init values
+    # init except values
     max = 2147483647
-    min = 0
+    min = 450000
 
     res_map = {
         0: (0, 50000),
@@ -169,8 +169,6 @@ def predict():
 
     if res in res_map.keys():
         min, max = res_map[res]
-    else:
-        min = 450000
 
     result = {
         "code": 200,
