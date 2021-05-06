@@ -1,10 +1,24 @@
 from flask import request, jsonify
+from sklearn.ensemble import BaggingClassifier
+from sklearn.tree import DecisionTreeClassifier
 
 from appdir import application
 import pandas as pd
 
 from appdir.config import Config
 from sklearn.neighbors import KNeighborsClassifier
+import joblib
+
+model = joblib.load(Config.model)
+
+describe = [
+        "Year",
+        "Month",
+        "County",
+        "Not Full Market Price",
+        "VAT Exclusive",
+        "Property Size Description"
+    ]
 
 
 def init():
@@ -20,7 +34,7 @@ def init():
         "Property Size Description"
     ]
 
-    df = pd.read_csv(Config.Data, encoding='unicode_escape')
+    df = pd.read_csv(Config.data, encoding='unicode_escape')
     df.columns = attributes
     df = df.drop(["Postal Code"], axis=1)
     df.dropna(axis=0, how='any', inplace=True)
@@ -97,20 +111,13 @@ def init():
         }
     }
     df.replace(num_encode, inplace=True)
-    global describe
-    describe = [
-        "Year",
-        "Month",
-        "County",
-        "Not Full Market Price",
-        "VAT Exclusive",
-        "Property Size Description"
-    ]
     x = df[describe]
     y = df["Price"]
-    global knn
-    knn = KNeighborsClassifier(n_neighbors=116, weights="distance")
-    knn.fit(x, y)
+    decision_tree_model = DecisionTreeClassifier(criterion='gini', max_depth=8, random_state=42)
+    bag_dec = BaggingClassifier(base_estimator=decision_tree_model, n_estimators=4, random_state=20)
+    bag_dec.fit(x, y)
+    joblib.dump(bag_dec, Config.model)
+
     return "success"
 
 
@@ -143,7 +150,7 @@ def predict():
         size = 2
 
     df_empty = pd.DataFrame([[year, month, county, full, vat, size]], columns=describe)
-    res = knn.predict(df_empty)
+    res = model.predict(df_empty)
 
     if pro == 1:
         if res[0] > 0:
@@ -182,4 +189,4 @@ def predict():
 
 
 # auto init
-init()
+# init()

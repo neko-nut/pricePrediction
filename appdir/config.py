@@ -10,5 +10,6 @@ class Config(object):
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    data = os.path.join(basedir, 'static/PPR-ALL.csv')
 
-    Data = os.path.join(basedir, 'static/PPR-ALL.csv')
+    model = os.path.join(basedir, 'static/model.pkl')
