@@ -9,6 +9,7 @@ from appdir.config import Config
 from sklearn.neighbors import KNeighborsClassifier
 import joblib
 
+# Comment out this if wanna re-generate model
 model = joblib.load(Config.model)
 
 describe = [
@@ -188,5 +189,6 @@ def predict():
     return jsonify(result)
 
 
+# Uncomment out this if wanna re-generate model
 # auto init
 # init()
