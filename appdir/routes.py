@@ -135,12 +135,12 @@ def predict():
 
     # user input
     if request.method == "POST":
-        year = request.form.get('year')
-        month = request.form.get('month')
-        county = request.form.get('county')
-        full = request.form.get('full')
-        pro = request.form.get('property')
-        vat = request.form.get('vat')
+        year = int(request.form.get('year'))
+        month = int(request.form.get('month'))
+        county = int(request.form.get('county'))
+        full = int(request.form.get('full'))
+        pro = int(request.form.get('property'))
+        vat = int(request.form.get('vat'))
         size = int(request.form.get('size'))
 
     if size < 35:
