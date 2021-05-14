@@ -1,13 +1,11 @@
+import joblib
+import pandas as pd
 from flask import request, jsonify
 from sklearn.ensemble import BaggingClassifier
 from sklearn.tree import DecisionTreeClassifier
 
 from appdir import application
-import pandas as pd
-
 from appdir.config import Config
-from sklearn.neighbors import KNeighborsClassifier
-import joblib
 
 # Comment out this if wanna re-generate model
 model = joblib.load(Config.model)
