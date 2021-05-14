@@ -13,13 +13,13 @@ import joblib
 model = joblib.load(Config.model)
 
 describe = [
-        "Year",
-        "Month",
-        "County",
-        "Not Full Market Price",
-        "VAT Exclusive",
-        "Property Size Description"
-    ]
+    "Year",
+    "Month",
+    "County",
+    "Not Full Market Price",
+    "VAT Exclusive",
+    "Property Size Description"
+]
 
 
 def init():
@@ -187,7 +187,6 @@ def predict():
         }
     }
     return jsonify(result)
-
 
 # Uncomment out this if wanna re-generate model
 # auto init
